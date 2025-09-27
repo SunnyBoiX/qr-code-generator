@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to QR Code Generator</h1>
+        <a href="/login">Login</a> | <a href="/register">Register</a>
+        <form action="/generate" method="post">
+            <label for="data">Enter text or URL:</label>
+            <input type="text" id="data" name="data" required>
+            <button type="submit">Generate QR Code</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash">
+            {% for message in messages %}
+              <div>{{ message }}</div>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
