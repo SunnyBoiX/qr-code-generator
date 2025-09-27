@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <a href="/logout">Logout</a>
+        <h2>Generate a new QR Code</h2>
+        <form action="/generate" method="post">
+            <label for="data">Enter text or URL:</label>
+            <input type="text" id="data" name="data" required>
+            <button type="submit">Generate QR Code</button>
+        </form>
+        <h2>Your QR Codes</h2>
+        <ul>
+            {% for qr in qrcodes %}
+            <li>
+                <img src="/static/qr_codes/{{ qr.filename }}" alt="QR Code" width="100">
+                <a href="/download/{{ qr.filename }}">Download</a> - {{ qr.data }} ({{ qr.created_at.strftime('%Y-%m-%d %H:%M') }})
+            </li>
+            {% else %}
+            <li>No QR codes generated yet.</li>
+            {% endfor %}
+        </ul>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash">
+            {% for message in messages %}
+              <div>{{ message }}</div>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
